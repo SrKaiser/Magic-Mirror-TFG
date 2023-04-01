@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/create_topic/associations.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stress_record_app/screens/create_topic/cancel_alert.dart';
+import 'package:stress_record_app/screens/create_topic/caution.dart';
 
 class ChargeLevelScreen extends StatefulWidget {
   static const routeName = '/add-topic-charge-level';
@@ -60,13 +61,16 @@ class _ChargeLevelScreenState extends State<ChargeLevelScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Select how much Stress/Stimulus is associated with the Topic:',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0).w,
+                      child: Text(
+                        'Select how much Stress/Stimulus is associated with the Topic:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -150,7 +154,7 @@ class _ChargeLevelScreenState extends State<ChargeLevelScreen> {
                         onPressed: () {
                           newTopic.stressLevel = double.parse(_controller.text);
                           Navigator.of(context).pushReplacementNamed(
-                              AssociationsScreen.routeName,
+                              CautionScreen.routeName,
                               arguments: newTopic);
                         },
                         style: ButtonStyle(

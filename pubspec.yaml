@@ -79,6 +79,7 @@ flutter:
     - assets/images/thumbsup.png
     - assets/images/avatar.jpg
     - assets/images/body_region.png
+    - assets/images/memories.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -118,6 +118,14 @@ class _AssociationBodyScreenState extends State<AssociationBodyScreen> {
           Center(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                'Where do you sense this in your body?',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
               SizedBox(
                 height: 20.0.h,
               ),

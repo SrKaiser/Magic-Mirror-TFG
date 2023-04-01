@@ -44,6 +44,15 @@ class _AssociationColorScreenState extends State<AssociationColorScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Text(
+                  'What colour do you imagine when you think of this topic?',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20.0.h),
                 Container(
                   width: 250.0.w,
                   height: 250.0.h,
@@ -80,7 +89,6 @@ class _AssociationColorScreenState extends State<AssociationColorScreen> {
                             child: ColorPicker(
                               pickerColor: selectedColor,
                               onColorChanged: changeColor,
-                              showLabel: true,
                               pickerAreaHeightPercent: 0.5,
                             ),
                           ),

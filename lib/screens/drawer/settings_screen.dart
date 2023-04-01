@@ -401,7 +401,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 3, 35, 94),
+                              backgroundColor: Color.fromARGB(255, 3, 35, 94),
                               padding: EdgeInsets.symmetric(
                                       horizontal: 16.0, vertical: 12.0)
                                   .r,
@@ -426,7 +426,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 3, 35, 94),
+                              backgroundColor: Color.fromARGB(255, 3, 35, 94),
                               padding: EdgeInsets.symmetric(
                                       horizontal: 16.0, vertical: 12.0)
                                   .r,
@@ -567,7 +567,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 3, 35, 94),
+                          backgroundColor: Color.fromARGB(255, 3, 35, 94),
                           padding: EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 12.0)
                               .r,

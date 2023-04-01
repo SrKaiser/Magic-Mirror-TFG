@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stress_record_app/navobserver.dart';
 import 'package:stress_record_app/screens/auth_process/forgotpass_screen.dart';
+import 'package:stress_record_app/screens/create_topic/caution.dart';
 import 'package:stress_record_app/screens/drawer/iedata.dart';
 import 'package:stress_record_app/screens/edit_topic/edit_body.dart';
 import 'package:stress_record_app/screens/edit_topic/edit_color.dart';
@@ -124,6 +125,7 @@ class _MyAppState extends State<MyApp> {
           EditColorScreen.routeName: (context) => EditColorScreen(),
           EditBodyScreen.routeName: (context) => EditBodyScreen(),
           ImportExportScreen.routeName: (context) => ImportExportScreen(),
+          CautionScreen.routeName: (context) => CautionScreen(),
         },
       ),
     );

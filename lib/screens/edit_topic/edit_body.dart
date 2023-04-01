@@ -129,7 +129,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                 width: 300.w,
                 decoration: BoxDecoration(
                   color: darkColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0).w),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black,
@@ -151,7 +151,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.circle_outlined,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -164,7 +164,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.star_border,
                         color: Colors.white,
                       ),
-                      iconSize: 30.w,
+                      iconSize: 30.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -177,7 +177,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.square_outlined,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -190,7 +190,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.brush,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -201,7 +201,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.delete_outline,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -249,7 +249,7 @@ class _EditBodyScreenState extends State<EditBodyScreen> {
                         Icons.save,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                   ],
                 ),

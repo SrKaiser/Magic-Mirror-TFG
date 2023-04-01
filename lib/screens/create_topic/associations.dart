@@ -101,8 +101,24 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                 ),
               ),
             // Fondo con el título centrado
-            if (numImportantAssociation == 0 || numImportantAssociation == 1)
-              Center(child: Container()),
+            if (numImportantAssociation == 0)
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 64, horizontal: 16).r,
+                child: Column(
+                  children: [
+                    Text(
+                      'You will now start to create associations that relate to your event.\n\n To enter the first one press the '
+                      'Associations'
+                      ' button.',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             if (numImportantAssociation == 2)
               Center(
                 child: RepaintBoundary(key: _stackRegionKey, child: bodyRegion),
@@ -292,7 +308,7 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
-                              primary: Color.fromARGB(255, 16, 78, 6),
+                              backgroundColor: Color.fromARGB(255, 16, 78, 6),
                             ),
                             onPressed: () {
                               submit(newTopic);
@@ -328,7 +344,7 @@ class cancelButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: CircleBorder(),
-        primary: Color.fromARGB(255, 130, 15, 6),
+        backgroundColor: Color.fromARGB(255, 130, 15, 6),
       ),
       onPressed: () {
         showDialog(

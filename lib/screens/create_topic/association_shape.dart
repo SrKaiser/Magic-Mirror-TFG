@@ -61,6 +61,17 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'Draw the shape of your sense',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
               bodyShape = Stack(
                 children: [
                   GestureDetector(
@@ -84,8 +95,8 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         : null,
                     onPanEnd: (DragEndDetails details) => _points.add(null),
                     child: Container(
-                      height: 610.h,
-                      width: 290.w,
+                      height: 580.h,
+                      width: 260.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(20.0).w,
@@ -136,7 +147,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.circle_outlined,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -149,7 +160,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.star_border,
                         color: Colors.white,
                       ),
-                      iconSize: 30.w,
+                      iconSize: 30.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -162,7 +173,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.square_outlined,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -175,7 +186,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.brush,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -186,7 +197,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.delete_outline,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                     IconButton(
                       onPressed: () {
@@ -235,7 +246,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
                         Icons.save,
                         color: Colors.white,
                       ),
-                      iconSize: 25.w,
+                      iconSize: 25.sp,
                     ),
                   ],
                 ),

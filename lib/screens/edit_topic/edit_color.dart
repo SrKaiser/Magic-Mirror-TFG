@@ -91,7 +91,6 @@ class _EditColorScreenState extends State<EditColorScreen> {
                         child: ColorPicker(
                           pickerColor: selectedColor,
                           onColorChanged: changeColor,
-                          showLabel: true,
                           pickerAreaHeightPercent: 0.5,
                         ),
                       ),
