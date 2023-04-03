@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:magic_mirror/utilities/timer_alert.dart';
+
 import '../../models/topic.dart';
 import '../create_topic/add_association.dart';
 import '../create_topic/cancel_alert.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:ui' as ui;
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:async';
 
 GlobalKey _stackRegionKey = GlobalKey();
 GlobalKey _stackBodyKey = GlobalKey();
@@ -63,167 +66,225 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final timerAlert = TimerAlert(
+      context: context,
+      inactivityDuration:
+          Duration(seconds: 10), // Cambia el valor según tus necesidades
+    );
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
-    return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return CancelAlert();
-            });
-      },
-      child: Scaffold(
-        backgroundColor:
-            _associatedColor == null ? Colors.white : _associatedColor,
-        appBar: AppBar(
-            title: Text('Associations'),
-            automaticallyImplyLeading: false,
-            backgroundColor: _associatedColor == null
-                ? Color.fromARGB(255, 32, 53, 130)
-                : HSLColor.fromColor(_associatedColor)
-                    .withLightness(0.1)
-                    .toColor()),
-        body: Stack(
-          children: [
-            if (numImportantAssociation == 0)
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromRGBO(7, 110, 219, 1),
-                      Color.fromRGBO(6, 70, 138, 1),
-                      Color.fromRGBO(5, 41, 79, 1),
-                    ],
-                    stops: [0.0, 0.5, 0.99],
+    return GestureDetector(
+      onTap: timerAlert.resetInactivityTimer,
+      onPanDown: (_) => timerAlert.resetInactivityTimer(),
+      onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
+      onPanEnd: (_) => timerAlert.resetInactivityTimer(),
+      child: WillPopScope(
+        // ignore: missing_return
+        onWillPop: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CancelAlert();
+              });
+        },
+        child: Scaffold(
+          backgroundColor:
+              _associatedColor == null ? Colors.white : _associatedColor,
+          appBar: AppBar(
+              title: Text('Associations'),
+              automaticallyImplyLeading: false,
+              backgroundColor: _associatedColor == null
+                  ? Color.fromARGB(255, 32, 53, 130)
+                  : HSLColor.fromColor(_associatedColor)
+                      .withLightness(0.1)
+                      .toColor()),
+          body: Stack(
+            children: [
+              if (numImportantAssociation == 0)
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(7, 110, 219, 1),
+                        Color.fromRGBO(6, 70, 138, 1),
+                        Color.fromRGBO(5, 41, 79, 1),
+                      ],
+                      stops: [0.0, 0.5, 0.99],
+                    ),
                   ),
                 ),
-              ),
-            // Fondo con el título centrado
-            if (numImportantAssociation == 0)
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 64, horizontal: 16).r,
-                child: Column(
-                  children: [
+              // Fondo con el título centrado
+              if (numImportantAssociation == 0)
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 64, horizontal: 16).r,
+                  child: Column(
+                    children: [
+                      Text(
+                        'You will now start to create associations that relate to your event.\n\n To enter the first one press the '
+                        'Associations'
+                        ' button.',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              if (numImportantAssociation == 2)
+                Center(
+                  child:
+                      RepaintBoundary(key: _stackRegionKey, child: bodyRegion),
+                ),
+              if (numImportantAssociation > 2)
+                Center(
+                    child: RepaintBoundary(
+                  key: _stackBodyKey,
+                  child: body,
+                )),
+
+              Center(
+                child: Stack(
+                  children: <Widget>[
                     Text(
-                      'You will now start to create associations that relate to your event.\n\n To enter the first one press the '
-                      'Associations'
-                      ' button.',
+                      newTopic.title,
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                        fontSize: 48.0.sp,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6.0.w
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      newTopic.title,
+                      style: TextStyle(
+                        fontSize: 48.0.sp,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
               ),
-            if (numImportantAssociation == 2)
-              Center(
-                child: RepaintBoundary(key: _stackRegionKey, child: bodyRegion),
-              ),
-            if (numImportantAssociation > 2)
-              Center(
-                  child: RepaintBoundary(
-                key: _stackBodyKey,
-                child: body,
-              )),
 
-            Center(
-              child: Stack(
-                children: <Widget>[
-                  Text(
-                    newTopic.title,
-                    style: TextStyle(
-                      fontSize: 48.0.sp,
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 6.0.w
-                        ..color = Colors.black,
-                    ),
-                  ),
-                  Text(
-                    newTopic.title,
-                    style: TextStyle(
-                      fontSize: 48.0.sp,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Contenido que se coloca encima
-            Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.all(16.0).w,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (numImportantAssociation == 0)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                          RawMaterialButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed(AssociationColorScreen.routeName)
-                                  .then((value) {
-                                setState(() {
-                                  if (value != null) numImportantAssociation++;
-                                  _associatedColor = value;
-                                });
-                              });
-                            },
-                            elevation: 10.0,
-                            fillColor: Color.fromARGB(255, 10, 38, 88),
-                            shape: CircleBorder(),
-                            constraints: BoxConstraints.tightFor(
-                              width: 175.0.w,
-                              height: 125.0.h,
+              // Contenido que se coloca encima
+              Positioned.fill(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0).w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (numImportantAssociation == 0)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
                             ),
-                            child: Text(
-                              "Associations",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                        ],
-                      ),
-                    if (numImportantAssociation == 1)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                          RawMaterialButton(
+                            RawMaterialButton(
                               onPressed: () {
                                 Navigator.of(context)
-                                    .pushNamed(AssociationBodyScreen.routeName,
-                                        arguments: _associatedColor)
+                                    .pushNamed(AssociationColorScreen.routeName)
                                     .then((value) {
                                   setState(() {
                                     if (value != null)
                                       numImportantAssociation++;
-                                    bodyRegion = value;
+                                    _associatedColor = value;
+                                  });
+                                });
+                              },
+                              elevation: 10.0,
+                              fillColor: Color.fromARGB(255, 10, 38, 88),
+                              shape: CircleBorder(),
+                              constraints: BoxConstraints.tightFor(
+                                width: 175.0.w,
+                                height: 125.0.h,
+                              ),
+                              child: Text(
+                                "Associations",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_back,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
+                            ),
+                          ],
+                        ),
+                      if (numImportantAssociation == 1)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
+                            ),
+                            RawMaterialButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed(
+                                          AssociationBodyScreen.routeName,
+                                          arguments: _associatedColor)
+                                      .then((value) {
+                                    setState(() {
+                                      if (value != null)
+                                        numImportantAssociation++;
+                                      bodyRegion = value;
+                                    });
+                                  });
+                                },
+                                elevation: 3.0,
+                                fillColor: HSLColor.fromColor(_associatedColor)
+                                    .withLightness(0.1)
+                                    .toColor(),
+                                shape: CircleBorder(),
+                                constraints: BoxConstraints.tightFor(
+                                  width: 175.0.w,
+                                  height: 125.0.h,
+                                ),
+                                child: Image(
+                                    image: AssetImage(
+                                        'assets/images/body_region.png'))),
+                            Icon(
+                              Icons.arrow_back,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
+                            ),
+                          ],
+                        ),
+                      if (numImportantAssociation == 2)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
+                            ),
+                            RawMaterialButton(
+                              onPressed: () async {
+                                String bodyRegion =
+                                    await stackToBase64(_stackRegionKey);
+                                Navigator.of(context).pushNamed(
+                                    AssociationShapeScreen.routeName,
+                                    arguments: {
+                                      'bodyRegion': bodyRegion,
+                                      'color': _associatedColor,
+                                    }).then((value) {
+                                  setState(() {
+                                    if (value != null)
+                                      numImportantAssociation++;
+                                    body = value;
                                   });
                                 });
                               },
@@ -236,103 +297,60 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                                 width: 175.0.w,
                                 height: 125.0.h,
                               ),
-                              child: Image(
-                                  image: AssetImage(
-                                      'assets/images/body_region.png'))),
-                          Icon(
-                            Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                        ],
-                      ),
-                    if (numImportantAssociation == 2)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                          RawMaterialButton(
-                            onPressed: () async {
-                              String bodyRegion =
-                                  await stackToBase64(_stackRegionKey);
-                              Navigator.of(context).pushNamed(
-                                  AssociationShapeScreen.routeName,
-                                  arguments: {
-                                    'bodyRegion': bodyRegion,
-                                    'color': _associatedColor,
-                                  }).then((value) {
-                                setState(() {
-                                  if (value != null) numImportantAssociation++;
-                                  body = value;
-                                });
-                              });
-                            },
-                            elevation: 3.0,
-                            fillColor: HSLColor.fromColor(_associatedColor)
-                                .withLightness(0.1)
-                                .toColor(),
-                            shape: CircleBorder(),
-                            constraints: BoxConstraints.tightFor(
-                              width: 175.0.w,
-                              height: 125.0.h,
-                            ),
-                            child: Text(
-                              "Draw the\nshape",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            size: 40.0.w,
-                          ),
-                        ],
-                      ),
-                    SizedBox(
-                      height: 120.h,
-                    ),
-                    if (numImportantAssociation == 3)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          cancelButton(),
-                          AddAssociation(),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              backgroundColor: Color.fromARGB(255, 16, 78, 6),
-                            ),
-                            onPressed: () {
-                              submit(newTopic);
-                            },
-                            child: Container(
-                              width: 48.0.w,
-                              height: 48.0.h,
-                              child: Center(
-                                child: Icon(
-                                  Icons.check,
+                              child: Text(
+                                "Draw the\nshape",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   color: Colors.white,
+                                  fontSize: 18.0.sp,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            Icon(
+                              Icons.arrow_back,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              size: 40.0.w,
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 120.h,
                       ),
-                    if (numImportantAssociation < 3) cancelButton(),
-                  ],
+                      if (numImportantAssociation == 3)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            cancelButton(),
+                            AddAssociation(),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: CircleBorder(),
+                                backgroundColor: Color.fromARGB(255, 16, 78, 6),
+                              ),
+                              onPressed: () {
+                                submit(newTopic);
+                              },
+                              child: Container(
+                                width: 48.0.w,
+                                height: 48.0.h,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (numImportantAssociation < 3) cancelButton(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

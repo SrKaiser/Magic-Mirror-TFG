@@ -28,6 +28,7 @@ dependencies:
   flutter_speed_dial: ^6.2.0
   flutter_screenutil: ^5.7.0
   email_validator: ^2.1.17
+  audioplayers: ^0.20.1
 
   # Image
   image_picker: ^0.8.7
@@ -80,6 +81,7 @@ flutter:
     - assets/images/avatar.jpg
     - assets/images/body_region.png
     - assets/images/memories.png
+    - assets/audio/bell.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

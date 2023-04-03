@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:magic_mirror/screens/topics_panel/topic_panel.dart';
 
 class CancelAlert extends StatelessWidget {
   @override
@@ -34,7 +35,8 @@ class CancelAlert extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            Navigator.of(context)
+                .pushReplacementNamed(TopicPanelScreen.routeName);
           },
         ),
       ],
