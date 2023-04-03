@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:magic_mirror/utilities/associations_grid.dart';
 import '/models/topic.dart';
 import 'dart:convert';
 import 'dart:typed_data';
-import '../create_topic/add_association.dart';
+
 import '../edit_topic/edit_body.dart';
 import '../edit_topic/edit_color.dart';
 import '../edit_topic/edit_information.dart';
@@ -264,19 +265,20 @@ class _EditTopicScreenState extends State<EditTopicScreen> {
           ],
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: imageProvider,
-                height: 610.h,
-                width: 290.w,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              AddAssociation(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Image(
+                  image: imageProvider,
+                  height: 610.h,
+                  width: 290.w,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                AssociationsGrid(),
+              ],
+            ),
           ),
         ),
       ),

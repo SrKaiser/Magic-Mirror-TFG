@@ -4,11 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyNavigatorObserver extends NavigatorObserver {
   String _lastPage;
 
-  void _loadLastPage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _lastPage = prefs.getString('lastPage');
-  }
-
   void _saveLastPage(String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('lastPage', page);

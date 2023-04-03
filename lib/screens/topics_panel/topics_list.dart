@@ -27,7 +27,6 @@ class _TopicsListState extends State<TopicsList> {
     //     .child("users")
     //     .child(user.uid)
     //     .child("topics");
-    print(widget.filterSelected);
     User user = FirebaseAuth.instance.currentUser;
     var myTopicsStorage = TopicsStorage(user.uid);
     myTopicsStorage.loadTopicsByFilter(widget.filterSelected).then(

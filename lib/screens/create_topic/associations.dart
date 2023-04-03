@@ -66,17 +66,17 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timerAlert = TimerAlert(
-      context: context,
-      inactivityDuration:
-          Duration(seconds: 10), // Cambia el valor según tus necesidades
-    );
+    // final timerAlert = TimerAlert(
+    //   context: context,
+    //   inactivityDuration:
+    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
+    // );
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
     return GestureDetector(
-      onTap: timerAlert.resetInactivityTimer,
-      onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      onPanEnd: (_) => timerAlert.resetInactivityTimer(),
+      // onTap: timerAlert.resetInactivityTimer,
+      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
+      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
+      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
       child: WillPopScope(
         // ignore: missing_return
         onWillPop: () {
@@ -90,13 +90,38 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
           backgroundColor:
               _associatedColor == null ? Colors.white : _associatedColor,
           appBar: AppBar(
-              title: Text('Associations'),
-              automaticallyImplyLeading: false,
-              backgroundColor: _associatedColor == null
-                  ? Color.fromARGB(255, 32, 53, 130)
-                  : HSLColor.fromColor(_associatedColor)
-                      .withLightness(0.1)
-                      .toColor()),
+            title: Text('Associations'),
+            automaticallyImplyLeading: false,
+            backgroundColor: _associatedColor == null
+                ? Color.fromARGB(255, 32, 53, 130)
+                : HSLColor.fromColor(_associatedColor)
+                    .withLightness(0.1)
+                    .toColor(),
+            actions: [
+              if (numImportantAssociation == 3)
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CancelAlert();
+                        });
+                  },
+                ),
+              if (numImportantAssociation == 3)
+                IconButton(
+                  icon: Icon(
+                    Icons.save,
+                  ),
+                  onPressed: () {
+                    submit(newTopic);
+                  },
+                ),
+            ],
+          ),
           body: Stack(
             children: [
               if (numImportantAssociation == 0)
@@ -317,33 +342,7 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                       SizedBox(
                         height: 120.h,
                       ),
-                      if (numImportantAssociation == 3)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            cancelButton(),
-                            AddAssociation(),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: CircleBorder(),
-                                backgroundColor: Color.fromARGB(255, 16, 78, 6),
-                              ),
-                              onPressed: () {
-                                submit(newTopic);
-                              },
-                              child: Container(
-                                width: 48.0.w,
-                                height: 48.0.h,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.check,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      if (numImportantAssociation == 3) AddAssociation(),
                       if (numImportantAssociation < 3) cancelButton(),
                     ],
                   ),
@@ -365,13 +364,7 @@ class cancelButton extends StatelessWidget {
         shape: CircleBorder(),
         backgroundColor: Color.fromARGB(255, 130, 15, 6),
       ),
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return CancelAlert();
-            });
-      },
+      onPressed: () {},
       child: Container(
         width: 48.0.w,
         height: 48.0.h,

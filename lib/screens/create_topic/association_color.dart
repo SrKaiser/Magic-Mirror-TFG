@@ -21,16 +21,16 @@ class _AssociationColorScreenState extends State<AssociationColorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timerAlert = TimerAlert(
-      context: context,
-      inactivityDuration:
-          Duration(seconds: 10), // Cambia el valor según tus necesidades
-    );
+    // final timerAlert = TimerAlert(
+    //   context: context,
+    //   inactivityDuration:
+    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
+    // );
     return GestureDetector(
-      onTap: timerAlert.resetInactivityTimer,
-      onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      onPanEnd: (_) => timerAlert.resetInactivityTimer(),
+      // onTap: timerAlert.resetInactivityTimer,
+      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
+      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
+      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Associated Color'),
