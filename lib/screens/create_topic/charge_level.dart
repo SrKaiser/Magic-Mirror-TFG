@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stress_record_app/models/topic.dart';
+import '../../models/topic.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/screens/create_topic/cancel_alert.dart';
-import 'package:stress_record_app/screens/create_topic/caution.dart';
+import '../create_topic/cancel_alert.dart';
+import '../create_topic/caution.dart';
 
 class ChargeLevelScreen extends StatefulWidget {
   static const routeName = '/add-topic-charge-level';
@@ -27,6 +27,7 @@ class _ChargeLevelScreenState extends State<ChargeLevelScreen> {
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
 
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         showDialog(
             context: context,

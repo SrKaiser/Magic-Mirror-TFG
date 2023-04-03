@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/create_topic/add_association.dart';
-import 'package:stress_record_app/screens/create_topic/cancel_alert.dart';
-import 'package:stress_record_app/screens/topics_panel/topic_panel.dart';
+import '../../models/topic.dart';
+import '../create_topic/add_association.dart';
+import '../create_topic/cancel_alert.dart';
+import '../topics_panel/topic_panel.dart';
 import './association_shape.dart';
 import './association_body_region.dart';
 import './association_color.dart';
@@ -65,6 +65,7 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
   Widget build(BuildContext context) {
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         showDialog(
             context: context,

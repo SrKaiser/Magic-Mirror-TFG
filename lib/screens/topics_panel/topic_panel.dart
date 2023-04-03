@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../create_topic/add_topic.dart';
-import 'topics_list.dart';
+import './topics_list.dart';
 import '../../drawer/drawer.dart';
 
 class TopicPanelScreen extends StatefulWidget {

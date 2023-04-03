@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/models/topic.dart';
+import '../../models/topic.dart';
 import 'dart:ui' as ui;
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:stress_record_app/screens/edit_topic/edit_topic.dart';
+import '../edit_topic/edit_topic.dart';
 
 Future<ui.Image> base64ToImage(String base64String) async {
   Uint8List bytes = base64.decode(base64String);

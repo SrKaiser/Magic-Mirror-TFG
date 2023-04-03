@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:stress_record_app/screens/auth_process/login_screen.dart';
-import 'package:stress_record_app/screens/drawer/settings_screen.dart';
+import '../screens/auth_process/login_screen.dart';
+import '../screens/drawer/settings_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDrawerFooter extends StatefulWidget {

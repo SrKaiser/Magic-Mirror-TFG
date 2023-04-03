@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/create_topic/associations.dart';
-import '../../utilities/styles.dart';
+import '../../models/topic.dart';
+import '../create_topic/associations.dart';
 
 class CautionScreen extends StatefulWidget {
   static const routeName = '/caution';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stress_record_app/screens/drawer/iedata.dart';
+import '../screens/drawer/iedata.dart';
 
 import './footer.dart';
 import './list_tile.dart';

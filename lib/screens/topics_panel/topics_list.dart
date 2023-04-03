@@ -3,9 +3,9 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/create_topic/add_topic.dart';
-import 'package:stress_record_app/screens/topics_panel/topic_item.dart';
+import '../../models/topic.dart';
+import '../create_topic/add_topic.dart';
+import '../topics_panel/topic_item.dart';
 import '../../utilities/loading_spinner.dart';
 
 class TopicsList extends StatefulWidget {

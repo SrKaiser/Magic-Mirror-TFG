@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_topic.dart';
-import 'package:stress_record_app/utilities/drawing_painter.dart';
+import '../../models/topic.dart';
+import '../edit_topic/edit_topic.dart';
+import '../../utilities/drawing_painter.dart';
 
-import 'package:stress_record_app/utilities/shapes_painter.dart';
+import '../../utilities/shapes_painter.dart';
 import 'dart:ui' as ui;
 import 'dart:convert';
 import 'dart:typed_data';

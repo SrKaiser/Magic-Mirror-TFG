@@ -3,11 +3,43 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/create_topic/cancel_alert.dart';
-import 'package:stress_record_app/screens/topics_panel/topic_panel.dart';
+import '../../models/topic.dart';
+import '../create_topic/cancel_alert.dart';
+import '../topics_panel/topic_panel.dart';
 import './charge_level.dart';
 import 'package:uuid/uuid.dart';
+
+Future<String> getCurrentAddress() async {
+  // Verifica si el servicio de ubicación está habilitado y solicita habilitarlo si es necesario.
+  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return 'Por favor, habilita el servicio de ubicación en tu dispositivo.';
+  }
+
+  // Verifica si se ha otorgado el permiso de ubicación y solicita el permiso si es necesario.
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return 'Permiso de ubicación denegado.';
+    }
+  }
+
+  // Obtiene la ubicación actual.
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  // Convierte las coordenadas en una dirección legible.
+  List<Placemark> placemarks =
+      await placemarkFromCoordinates(position.latitude, position.longitude);
+
+  if (placemarks.isNotEmpty) {
+    Placemark placemark = placemarks.first;
+    return '${placemark.street}, ${placemark.locality}, ${placemark.country}';
+  } else {
+    return 'No se pudo obtener la dirección.';
+  }
+}
 
 class AddTopicScreen extends StatefulWidget {
   static const routeName = '/add-topic';
@@ -23,35 +55,6 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   String _location = 'Unknown Location';
-  Future<void> _getCurrentLocation() async {
-    try {
-      // Comprobar si la ubicación está activada
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return;
-        }
-      }
-
-      // Obtener la ubicación actual
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best,
-      );
-
-      // Traducir las coordenadas a una dirección
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-
-      // Actualizar la información de ubicación
-      setState(() {
-        _location = placemarks.first.street;
-      });
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
   bool errorExist = false;
   String dateMade = DateFormat.yMd().format(DateTime.now());
   String timeMade;
@@ -164,10 +167,18 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
     });
   }
 
+  Future<void> _getAddress() async {
+    String address = await getCurrentAddress();
+    setState(() {
+      _location = address;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     timeMade = TimeOfDay.now().format(context);
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         showDialog(
             context: context,
@@ -421,7 +432,7 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
                                 Container(
                                   width: 60.0.w,
                                   child: Text(
-                                    'Place',
+                                    'Place:',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.sp,
@@ -439,7 +450,7 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
                                       color: Color.fromARGB(255, 74, 80, 246),
                                     ),
                                     child: TextFormField(
-                                      enabled: false,
+                                      readOnly: true,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16.sp),
                                       decoration: InputDecoration(
@@ -455,7 +466,7 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
                                         ),
                                       ),
                                       onTap: () {
-                                        _getCurrentLocation();
+                                        _getAddress();
                                       },
                                     ),
                                   ),

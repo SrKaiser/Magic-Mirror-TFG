@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/utilities/drawing_painter.dart';
+import '/utilities/drawing_painter.dart';
 import '../../utilities/shapes_painter.dart';
 import 'dart:convert';
 import 'dart:typed_data';

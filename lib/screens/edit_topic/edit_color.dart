@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:stress_record_app/models/topic.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_topic.dart';
+import '../../models/topic.dart';
+import '../edit_topic/edit_topic.dart';
 
 class EditColorScreen extends StatefulWidget {
   static const routeName = '/edit-topic-color';

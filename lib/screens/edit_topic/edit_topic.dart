@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stress_record_app/models/topic.dart';
+import '/models/topic.dart';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:stress_record_app/screens/create_topic/add_association.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_body.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_color.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_information.dart';
-import 'package:stress_record_app/screens/edit_topic/edit_stress_level.dart';
-import 'package:stress_record_app/screens/topics_panel/topic_panel.dart';
+import '../create_topic/add_association.dart';
+import '../edit_topic/edit_body.dart';
+import '../edit_topic/edit_color.dart';
+import '../edit_topic/edit_information.dart';
+import '../edit_topic/edit_stress_level.dart';
+import '../topics_panel/topic_panel.dart';
 
 showEditOptions(BuildContext context, Topic topic, Color colorAssociated) {
   BuildContext dialogContext = context;
@@ -227,6 +227,7 @@ class _EditTopicScreenState extends State<EditTopicScreen> {
     ImageProvider imageProvider = MemoryImage(bytes);
 
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         Navigator.of(context).pushReplacementNamed(TopicPanelScreen.routeName);
       },

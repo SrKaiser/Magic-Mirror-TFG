@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:stress_record_app/screens/auth_process/login_screen.dart';
+import '../auth_process/login_screen.dart';
 
 import '../../drawer/drawer.dart';
 import 'dart:io';
