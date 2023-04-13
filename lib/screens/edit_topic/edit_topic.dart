@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:magic_mirror/utilities/associations_grid.dart';
+import 'package:magic_mirror/utilities/help_button.dart';
 import '/models/topic.dart';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -273,6 +274,10 @@ class _EditTopicScreenState extends State<EditTopicScreen> {
                   height: 610.h,
                   width: 290.w,
                 ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                HelpButton(colorAssociated),
                 SizedBox(
                   height: 20.h,
                 ),

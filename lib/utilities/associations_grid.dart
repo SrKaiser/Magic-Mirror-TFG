@@ -1,30 +1,63 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Future<String> getImageUrl(String imagePath) async {
-  FirebaseStorage storage = FirebaseStorage.instance;
-  Reference ref = storage.ref().child(imagePath);
-
-  String imageUrl = await ref.getDownloadURL();
-  return imageUrl;
+Future<String> getImageUrl(String id) async {
+  print(id);
+  final ref = FirebaseStorage.instance.ref('associations/' + id + '/icon.png');
+  final url = await ref.getDownloadURL();
+  return url;
 }
 
-Future<List<Map<String, dynamic>>> getAssociations() async {
-  DatabaseReference ref = FirebaseDatabase.instance.ref().child('associations');
-  DataSnapshot snapshot = await ref.get();
-  Map<String, dynamic> data = snapshot.value;
-  List<Map<String, dynamic>> associations = [];
+Future<List<Widget>> buildContainers() async {
+  final snapshot =
+      await FirebaseDatabase.instance.ref().child('associations').once();
+  List<Widget> containers = [];
 
-  data.forEach((key, value) {
-    Map<String, dynamic> association = value;
-    association['key'] = key;
-    associations.add(association);
-  });
+  Map<dynamic, dynamic> associations = snapshot.snapshot.value;
 
-  return associations;
+  for (var key in associations.keys) {
+    final imageUrl = await getImageUrl(key);
+    containers.add(
+      Container(
+          height: 92.h,
+          width: 92.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: Colors.black, width: 2),
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 5),
+              Expanded(
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Text(key),
+              SizedBox(height: 5),
+            ],
+          )),
+    );
+  }
+
+  containers.add(
+    Container(
+      height: 92.h,
+      width: 92.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.black, width: 2),
+        color: Colors.white,
+      ),
+      child: Icon(Icons.add),
+    ),
+  );
+
+  return containers;
 }
 
 class AssociationsGrid extends StatefulWidget {
@@ -33,52 +66,29 @@ class AssociationsGrid extends StatefulWidget {
 }
 
 class _AssociationsGridState extends State<AssociationsGrid> {
+  Future<List<Widget>> _containersFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _containersFuture = buildContainers();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getAssociations(),
-      builder: (BuildContext context,
-          AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: snapshot.data.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                childAspectRatio: 1.0,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: FutureBuilder(
-                    future: getImageUrl(
-                        'associations/${snapshot.data[index]['id']}/icon.png'),
-                    builder: (context, AsyncSnapshot<String> imageUrlSnapshot) {
-                      if (imageUrlSnapshot.connectionState ==
-                              ConnectionState.done &&
-                          imageUrlSnapshot.hasData) {
-                        return Image.network(
-                          imageUrlSnapshot.data,
-                          fit: BoxFit.cover,
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                );
-              },
-            );
-          } else {
-            return Center(child: Text('No associations found.'));
-          }
+    return FutureBuilder<List<Widget>>(
+      future: _containersFuture,
+      builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return CircularProgressIndicator();
+          return Wrap(
+            spacing: 22.0,
+            runSpacing: 16.0,
+            children: snapshot.data,
+          );
         }
       },
     );
