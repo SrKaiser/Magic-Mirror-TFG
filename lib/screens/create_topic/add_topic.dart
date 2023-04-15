@@ -4,11 +4,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import '../../models/topic.dart';
-import '../create_topic/cancel_alert.dart';
+import '../../utilities/cancel_alert.dart';
 import '../topics_panel/topic_panel.dart';
 import './charge_level.dart';
 import 'package:uuid/uuid.dart';
 
+bool addressGotten = false;
 Future<String> getCurrentAddress() async {
   // Verifica si el servicio de ubicación está habilitado y solicita habilitarlo si es necesario.
   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -35,6 +36,7 @@ Future<String> getCurrentAddress() async {
 
   if (placemarks.isNotEmpty) {
     Placemark placemark = placemarks.first;
+    addressGotten = true;
     return '${placemark.street}, ${placemark.locality}, ${placemark.country}';
   } else {
     return 'No se pudo obtener la dirección.';
@@ -74,7 +76,7 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
       time: _timeController.text,
       dateCreated: dateMade,
       timeCreated: timeMade,
-      placeCreated: 'TBD',
+      placeCreated: _location,
     );
 
     Navigator.of(context).pop();
@@ -165,13 +167,17 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
         }
       });
     });
+    _getAddress();
   }
 
   Future<void> _getAddress() async {
     String address = await getCurrentAddress();
-    setState(() {
-      _location = address;
-    });
+    if (addressGotten == true) {
+      setState(() {
+        addressGotten = false;
+        _location = address;
+      });
+    }
   }
 
   @override

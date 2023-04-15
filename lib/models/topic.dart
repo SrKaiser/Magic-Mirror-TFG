@@ -19,6 +19,13 @@ class Topic {
   String colorAssociated;
   String body;
 
+  String flavourAttribute;
+  String smellsAttribute;
+  String soundsAttribute;
+  String texturesAttribute;
+  String animalsAttribute;
+  String treesAttribute;
+
   Topic({
     this.id,
     this.title,
@@ -31,6 +38,12 @@ class Topic {
     this.stressLevel,
     this.colorAssociated,
     this.body,
+    this.flavourAttribute,
+    this.smellsAttribute,
+    this.soundsAttribute,
+    this.texturesAttribute,
+    this.animalsAttribute,
+    this.treesAttribute,
   });
 
   Map<String, dynamic> toJson() => {

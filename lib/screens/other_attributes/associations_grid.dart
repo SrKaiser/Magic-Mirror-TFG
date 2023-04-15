@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:magic_mirror/models/topic.dart';
+import 'package:magic_mirror/screens/other_attributes/association_widget.dart';
 
 Future<String> getImageUrl(String id) async {
   print(id);
@@ -10,7 +12,8 @@ Future<String> getImageUrl(String id) async {
   return url;
 }
 
-Future<List<Widget>> buildContainers() async {
+Future<List<Widget>> buildContainers(
+    BuildContext contextApp, Topic topic) async {
   final snapshot =
       await FirebaseDatabase.instance.ref().child('associations').once();
   List<Widget> containers = [];
@@ -20,7 +23,13 @@ Future<List<Widget>> buildContainers() async {
   for (var key in associations.keys) {
     final imageUrl = await getImageUrl(key);
     containers.add(
-      Container(
+      GestureDetector(
+        onTap: () {
+          print(key);
+          Navigator.of(contextApp).pushNamed(AssociationWidgetScreen.routeName,
+              arguments: {'topic': topic, 'attribute': key});
+        },
+        child: Container(
           height: 92.h,
           width: 92.w,
           decoration: BoxDecoration(
@@ -40,27 +49,19 @@ Future<List<Widget>> buildContainers() async {
               Text(key),
               SizedBox(height: 5),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
-
-  containers.add(
-    Container(
-      height: 92.h,
-      width: 92.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(color: Colors.black, width: 2),
-        color: Colors.white,
-      ),
-      child: Icon(Icons.add),
-    ),
-  );
 
   return containers;
 }
 
 class AssociationsGrid extends StatefulWidget {
+  final BuildContext contextApp;
+  final Topic topic;
+  AssociationsGrid(this.contextApp, this.topic);
   @override
   _AssociationsGridState createState() => _AssociationsGridState();
 }
@@ -71,7 +72,7 @@ class _AssociationsGridState extends State<AssociationsGrid> {
   @override
   void initState() {
     super.initState();
-    _containersFuture = buildContainers();
+    _containersFuture = buildContainers(widget.contextApp, widget.topic);
   }
 
   @override

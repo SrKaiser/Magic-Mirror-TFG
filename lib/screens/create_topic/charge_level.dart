@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/topic.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../create_topic/cancel_alert.dart';
+import '../../utilities/cancel_alert.dart';
 import '../create_topic/caution.dart';
 
 class ChargeLevelScreen extends StatefulWidget {

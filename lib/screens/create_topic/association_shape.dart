@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/timer_alert.dart';
+import 'package:magic_mirror/utilities/inactivity_detector.dart';
 
 import '/utilities/drawing_painter.dart';
 import '../../utilities/shapes_painter.dart';
@@ -15,7 +15,8 @@ class AssociationShapeScreen extends StatefulWidget {
   State<AssociationShapeScreen> createState() => _AssociationShapeScreenState();
 }
 
-class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
+class _AssociationShapeScreenState extends State<AssociationShapeScreen>
+    with InactivityDetectorMixin<AssociationShapeScreen> {
   List<Shape> _shapes = [];
   ShapeType _selectedShape = ShapeType.Circle;
   List<Offset> _points = <Offset>[];
@@ -39,17 +40,9 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
 
     Color associatedColor = args['color'];
 
-    // final timerAlert = TimerAlert(
-    //   context: context,
-    //   inactivityDuration:
-    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
-    // );
-    return GestureDetector(
-      // onTap: timerAlert.resetInactivityTimer,
-      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
-      child: Scaffold(
+    return buildInactivityDetector(
+      context,
+      Scaffold(
         appBar: AppBar(
           title: Text('Associated Shape'),
         ),
@@ -269,5 +262,15 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen> {
         ]),
       ),
     );
+  }
+
+  @override
+  void didPop() {
+    // TODO: implement didPop
+  }
+
+  @override
+  void didPushNext() {
+    // TODO: implement didPushNext
   }
 }

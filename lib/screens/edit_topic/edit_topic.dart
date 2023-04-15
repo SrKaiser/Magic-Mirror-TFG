@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/associations_grid.dart';
+import 'package:magic_mirror/screens/other_attributes/associations_grid.dart';
 import 'package:magic_mirror/utilities/help_button.dart';
 import '/models/topic.dart';
 import 'dart:convert';
@@ -281,7 +281,7 @@ class _EditTopicScreenState extends State<EditTopicScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                AssociationsGrid(),
+                AssociationsGrid(context, topic),
               ],
             ),
           ),

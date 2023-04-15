@@ -33,11 +33,11 @@ class HelpButton extends StatelessWidget {
                         backgroundColor: alertColor,
                         title: Text(
                           "More Atributtes",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: buttonColor),
                         ),
                         content: Text(
                           "Here below you have different panels with a different theme, you must choose a specific element (animal, tree...) that you associate with your event that causes stress, it is not necessary to choose all of them.",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: buttonColor),
                         ),
                       );
                     });

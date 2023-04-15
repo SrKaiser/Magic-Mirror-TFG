@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/timer_alert.dart';
+import 'package:magic_mirror/utilities/inactivity_detector.dart';
 
 class AssociationColorScreen extends StatefulWidget {
   static const routeName = '/add-topic-associations-color';
@@ -9,7 +9,8 @@ class AssociationColorScreen extends StatefulWidget {
   State<AssociationColorScreen> createState() => _AssociationColorScreenState();
 }
 
-class _AssociationColorScreenState extends State<AssociationColorScreen> {
+class _AssociationColorScreenState extends State<AssociationColorScreen>
+    with InactivityDetectorMixin<AssociationColorScreen> {
   Color selectedColor = Colors.white;
   int timesSelected = 0;
 
@@ -21,17 +22,9 @@ class _AssociationColorScreenState extends State<AssociationColorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final timerAlert = TimerAlert(
-    //   context: context,
-    //   inactivityDuration:
-    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
-    // );
-    return GestureDetector(
-      // onTap: timerAlert.resetInactivityTimer,
-      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
-      child: Scaffold(
+    return buildInactivityDetector(
+      context,
+      Scaffold(
         appBar: AppBar(
           title: Text('Associated Color'),
         ),
@@ -186,5 +179,15 @@ class _AssociationColorScreenState extends State<AssociationColorScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void didPop() {
+    // TODO: implement didPop
+  }
+
+  @override
+  void didPushNext() {
+    // TODO: implement didPushNext
   }
 }

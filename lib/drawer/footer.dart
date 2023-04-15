@@ -22,7 +22,7 @@ class _AppDrawerFooterState extends State<AppDrawerFooter> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0).w,
             ),
-            backgroundColor: Color.fromARGB(255, 32, 53, 130),
+            backgroundColor: Color.fromARGB(255, 8, 54, 85),
             title: Text(
               "Logout",
               style: TextStyle(color: Colors.white),

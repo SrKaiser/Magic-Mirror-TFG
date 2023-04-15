@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/timer_alert.dart';
+import 'package:magic_mirror/utilities/inactivity_detector.dart';
 import '../../utilities/drawing_painter.dart';
 
 class AssociationBodyScreen extends StatefulWidget {
@@ -11,7 +11,8 @@ class AssociationBodyScreen extends StatefulWidget {
   State<AssociationBodyScreen> createState() => _AssociationBodyScreenState();
 }
 
-class _AssociationBodyScreenState extends State<AssociationBodyScreen> {
+class _AssociationBodyScreenState extends State<AssociationBodyScreen>
+    with InactivityDetectorMixin<AssociationBodyScreen> {
   List<Offset> _points = <Offset>[];
   bool _isDrawing = false;
   Stack bodyRegion;
@@ -26,27 +27,23 @@ class _AssociationBodyScreenState extends State<AssociationBodyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final timerAlert = TimerAlert(
-    //   context: context,
-    //   inactivityDuration:
-    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
-    // );
     final brushColor = ModalRoute.of(context).settings.arguments as Color;
-    return GestureDetector(
-      // onTap: timerAlert.resetInactivityTimer,
-      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
-      child: Scaffold(
+    return buildInactivityDetector(
+      context,
+      Scaffold(
         appBar: AppBar(
           title: Text('Associated Body Region'),
         ),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.menu_close,
+          backgroundColor: Color.fromARGB(255, 32, 53, 130),
           children: [
             SpeedDialChild(
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.brush),
+              backgroundColor: Color.fromARGB(255, 32, 53, 130),
+              child: Icon(
+                Icons.brush,
+                color: Colors.white,
+              ),
               onTap: () {
                 setState(() {
                   _isDrawing = true;
@@ -54,8 +51,11 @@ class _AssociationBodyScreenState extends State<AssociationBodyScreen> {
               },
             ),
             SpeedDialChild(
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.delete),
+              backgroundColor: Color.fromARGB(255, 32, 53, 130),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
               onTap: () {
                 setState(() {
                   _points.clear();
@@ -63,8 +63,11 @@ class _AssociationBodyScreenState extends State<AssociationBodyScreen> {
               },
             ),
             SpeedDialChild(
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.save),
+              backgroundColor: Color.fromARGB(255, 32, 53, 130),
+              child: Icon(
+                Icons.save,
+                color: Colors.white,
+              ),
               onTap: () {
                 showDialog(
                   context: context,

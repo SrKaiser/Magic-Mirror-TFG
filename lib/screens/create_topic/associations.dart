@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:magic_mirror/utilities/timer_alert.dart';
+import 'package:magic_mirror/screens/other_attributes/associations_grid.dart';
+import 'package:magic_mirror/utilities/help_button.dart';
+import 'package:magic_mirror/utilities/inactivity_detector.dart';
 
 import '../../models/topic.dart';
-import '../create_topic/add_association.dart';
-import '../create_topic/cancel_alert.dart';
+import '../../utilities/cancel_alert.dart';
 import '../topics_panel/topic_panel.dart';
 import './association_shape.dart';
 import './association_body_region.dart';
@@ -34,7 +35,8 @@ class AssociationsScreen extends StatefulWidget {
   State<AssociationsScreen> createState() => _AssociationsScreenState();
 }
 
-class _AssociationsScreenState extends State<AssociationsScreen> {
+class _AssociationsScreenState extends State<AssociationsScreen>
+    with InactivityDetectorMixin<AssociationsScreen> {
   int numImportantAssociation = 0;
   Color _associatedColor;
   Stack bodyRegion;
@@ -66,18 +68,11 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final timerAlert = TimerAlert(
-    //   context: context,
-    //   inactivityDuration:
-    //       Duration(seconds: 10), // Cambia el valor según tus necesidades
-    // );
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
-    return GestureDetector(
-      // onTap: timerAlert.resetInactivityTimer,
-      // onPanDown: (_) => timerAlert.resetInactivityTimer(),
-      // onPanUpdate: (_) => timerAlert.resetInactivityTimer(),
-      // onPanEnd: (_) => timerAlert.resetInactivityTimer(),
-      child: WillPopScope(
+
+    return buildInactivityDetector(
+      context,
+      WillPopScope(
         // ignore: missing_return
         onWillPop: () {
           showDialog(
@@ -165,9 +160,23 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                 ),
               if (numImportantAssociation > 2)
                 Center(
-                    child: RepaintBoundary(
-                  key: _stackBodyKey,
-                  child: body,
+                    child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      RepaintBoundary(
+                        key: _stackBodyKey,
+                        child: body,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      HelpButton(_associatedColor),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      AssociationsGrid(context, newTopic),
+                    ],
+                  ),
                 )),
 
               Center(
@@ -342,7 +351,6 @@ class _AssociationsScreenState extends State<AssociationsScreen> {
                       SizedBox(
                         height: 120.h,
                       ),
-                      if (numImportantAssociation == 3) AddAssociation(),
                       if (numImportantAssociation < 3) cancelButton(),
                     ],
                   ),
@@ -364,7 +372,13 @@ class cancelButton extends StatelessWidget {
         shape: CircleBorder(),
         backgroundColor: Color.fromARGB(255, 130, 15, 6),
       ),
-      onPressed: () {},
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CancelAlert();
+            });
+      },
       child: Container(
         width: 48.0.w,
         height: 48.0.h,
