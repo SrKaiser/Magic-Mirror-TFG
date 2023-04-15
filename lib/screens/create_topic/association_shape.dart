@@ -263,14 +263,4 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen>
       ),
     );
   }
-
-  @override
-  void didPop() {
-    // TODO: implement didPop
-  }
-
-  @override
-  void didPushNext() {
-    // TODO: implement didPushNext
-  }
 }

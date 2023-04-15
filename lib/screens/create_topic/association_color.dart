@@ -180,14 +180,4 @@ class _AssociationColorScreenState extends State<AssociationColorScreen>
       ),
     );
   }
-
-  @override
-  void didPop() {
-    // TODO: implement didPop
-  }
-
-  @override
-  void didPushNext() {
-    // TODO: implement didPushNext
-  }
 }
