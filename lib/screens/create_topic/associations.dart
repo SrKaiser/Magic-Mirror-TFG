@@ -44,26 +44,11 @@ class _AssociationsScreenState extends State<AssociationsScreen>
 
   Future<void> submit(Topic newTopic) async {
     newTopic.body = await stackToBase64(_stackBodyKey);
-    newTopic.colorAssociated = _associatedColor.toString();
+
     User user = FirebaseAuth.instance.currentUser;
     var myTopicsStorage = TopicsStorage(user.uid);
     await myTopicsStorage.saveTopic(newTopic);
     Navigator.of(context).pushReplacementNamed(TopicPanelScreen.routeName);
-    // final ref = FirebaseDatabase.instance.ref();
-    // String key = ref.child("users").child(user.uid).child("topics").push().key;
-    // ref.child("users").child(user.uid).child("topics").child(key).set({
-    // 'id': key,
-    // 'title': newTopic.title,
-    // 'place': newTopic.place,
-    // 'date': newTopic.date,
-    // 'time': newTopic.time,
-    // 'place_created': newTopic.placeCreated,
-    // 'time_created': newTopic.timeCreated,
-    // 'date_created': newTopic.dateCreated,
-    // 'stress_level': newTopic.stressLevel,
-    // 'color_associated': newTopic.colorAssociated,
-    // 'body': newTopic.body,
-    // });
   }
 
   @override
@@ -228,6 +213,8 @@ class _AssociationsScreenState extends State<AssociationsScreen>
                                     if (value != null)
                                       numImportantAssociation++;
                                     _associatedColor = value;
+                                    newTopic.colorAssociated =
+                                        _associatedColor.toString();
                                   });
                                 });
                               },

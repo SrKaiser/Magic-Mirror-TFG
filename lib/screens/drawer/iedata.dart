@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_mirror/models/topic.dart';
 import '../../drawer/drawer.dart';
@@ -220,8 +221,26 @@ class ImportExportScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     User user = FirebaseAuth.instance.currentUser;
+                    final databaseReference = FirebaseDatabase.instance
+                        .ref()
+                        .child('users')
+                        .child(user.uid);
+
+                    DatabaseEvent snapshot =
+                        await databaseReference.child('num_exports').once();
+                    int numExports = snapshot.snapshot.value;
+
                     await exportTopics(
-                        'magic-mirror-${user.email}-data3.json', context);
+                        'magic-mirror-${user.email}-topics${numExports}.json',
+                        context);
+
+                    numExports = numExports + 1;
+                    databaseReference
+                        .update({'num_exports': numExports}).then((value) {
+                      print('Campo actualizado correctamente');
+                    }).catchError((error) {
+                      print('Error al actualizar el campo: $error');
+                    });
                   },
                   child: Text(
                     'Export Data',

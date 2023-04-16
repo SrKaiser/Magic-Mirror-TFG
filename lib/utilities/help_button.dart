@@ -4,11 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class HelpButton extends StatelessWidget {
   final Color alertColor;
 
+  Color getContrastColor(Color color) {
+    double luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+
+    if (luminance > 0.5) {
+      return Colors.black;
+    } else {
+      return Colors.white;
+    }
+  }
+
   HelpButton(this.alertColor);
   @override
   Widget build(BuildContext context) {
-    Color buttonColor = Colors.black;
-    if (alertColor.computeLuminance() < 0.07) buttonColor = Colors.white;
+    Color buttonColor = getContrastColor(alertColor);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [

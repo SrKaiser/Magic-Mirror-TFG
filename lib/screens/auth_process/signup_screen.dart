@@ -192,6 +192,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         'id': user.uid,
         'email': _emailController.text.trim(),
         'birth_date': _dateController.text.trim(),
+        'num_exports': 0,
       });
 
       final img = await getImageFileFromAssets('assets/images/avatar.jpg');

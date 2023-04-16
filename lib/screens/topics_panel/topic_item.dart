@@ -26,17 +26,6 @@ Color getContrastColor(Color color) {
   }
 }
 
-Color getContrastColor2(Color color) {
-  double luminance =
-      (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
-
-  if (luminance > 0.5) {
-    return Color.fromARGB(255, 109, 22, 16);
-  } else {
-    return Color.fromARGB(255, 224, 29, 29);
-  }
-}
-
 class TopicItem extends StatefulWidget {
   final Topic topic;
   TopicItem({this.topic});
