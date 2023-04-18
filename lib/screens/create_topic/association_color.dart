@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/inactivity_detector.dart';
+import '../../utilities/inactivity_detector.dart';
 
 class AssociationColorScreen extends StatefulWidget {
   static const routeName = '/add-topic-associations-color';

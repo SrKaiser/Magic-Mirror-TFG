@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/inactivity_detector.dart';
+import '../../utilities/inactivity_detector.dart';
 import '../../utilities/drawing_painter.dart';
 
 class AssociationBodyScreen extends StatefulWidget {

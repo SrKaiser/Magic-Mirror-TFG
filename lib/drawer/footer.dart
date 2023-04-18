@@ -62,11 +62,11 @@ class _AppDrawerFooterState extends State<AppDrawerFooter> {
         Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName);
       },
       child: Container(
-        height: 70,
+        height: 70.h,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white10,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20).r,
         ),
         child: Center(
           child: Row(
@@ -74,15 +74,15 @@ class _AppDrawerFooterState extends State<AppDrawerFooter> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  width: 40,
-                  height: 40,
+                  margin: EdgeInsets.symmetric(horizontal: 10).w,
+                  width: 40.w,
+                  height: 40.w,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(80),
+                    borderRadius: BorderRadius.circular(80).r,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(120),
+                    borderRadius: BorderRadius.circular(120).r,
                     child: FutureBuilder(
                       future: downloadPhoto(),
                       builder: (context, snapshot) {
@@ -113,7 +113,7 @@ class _AppDrawerFooterState extends State<AppDrawerFooter> {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.clip,
@@ -137,7 +137,7 @@ class _AppDrawerFooterState extends State<AppDrawerFooter> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 10),
+                  padding: EdgeInsets.only(right: 10).r,
                   child: IconButton(
                     onPressed: () {
                       signOut(context);

@@ -58,6 +58,12 @@ class Topic {
         'stressLevel': stressLevel,
         'colorAssociated': colorAssociated,
         'body': body,
+        'flavourAttribute': flavourAttribute,
+        'smellsAttribute': smellsAttribute,
+        'soundsAttribute': soundsAttribute,
+        'texturesAttribute': texturesAttribute,
+        'animalsAttribute': animalsAttribute,
+        'treesAttribute': treesAttribute,
       };
 
   static Topic fromJson(Map<String, dynamic> json) => Topic(
@@ -72,6 +78,12 @@ class Topic {
         stressLevel: json['stressLevel'],
         colorAssociated: json['colorAssociated'],
         body: json['body'],
+        flavourAttribute: json['flavorAttribute'],
+        smellsAttribute: json['smellsAttribute'],
+        soundsAttribute: json['soundsAttribute'],
+        texturesAttribute: json['texturesAttribute'],
+        animalsAttribute: json['animalsAttribute'],
+        treesAttribute: json['treesAttribute'],
       );
 
   void setStressLevel(double stressLevel) {

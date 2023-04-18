@@ -9,7 +9,7 @@ mixin InactivityDetectorMixin<T extends StatefulWidget> on State<T>
 
   void _resetTimer() {
     _inactivityTimer?.cancel();
-    _inactivityTimer = Timer(Duration(seconds: 5), () async {
+    _inactivityTimer = Timer(Duration(seconds: 45), () async {
       // Reproducir sonido de campana
       final player = AudioCache();
       await player.play('audio/bell.mp3');

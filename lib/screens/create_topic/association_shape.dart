@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/utilities/inactivity_detector.dart';
+import '../../utilities/inactivity_detector.dart';
 
-import '/utilities/drawing_painter.dart';
+import '../../utilities/drawing_painter.dart';
 import '../../utilities/shapes_painter.dart';
 import 'dart:convert';
 import 'dart:typed_data';

@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:magic_mirror/screens/other_attributes/associations_grid.dart';
-import 'package:magic_mirror/utilities/help_button.dart';
-import 'package:magic_mirror/utilities/inactivity_detector.dart';
+import '/screens/other_attributes/associations_grid.dart';
+import '/screens/other_attributes/attributes_images.dart';
+import '../../utilities/help_button.dart';
+import '../../utilities/inactivity_detector.dart';
 
 import '../../models/topic.dart';
 import '../../utilities/cancel_alert.dart';
@@ -41,6 +42,14 @@ class _AssociationsScreenState extends State<AssociationsScreen>
   Color _associatedColor;
   Stack bodyRegion;
   Stack body;
+  Topic topic;
+
+  void _updateTopic(Topic newTopic) {
+    print('update');
+    setState(() {
+      topic = newTopic;
+    });
+  }
 
   Future<void> submit(Topic newTopic) async {
     newTopic.body = await stackToBase64(_stackBodyKey);
@@ -54,6 +63,7 @@ class _AssociationsScreenState extends State<AssociationsScreen>
   @override
   Widget build(BuildContext context) {
     var newTopic = ModalRoute.of(context).settings.arguments as Topic;
+    _updateTopic(newTopic);
 
     return buildInactivityDetector(
       context,
@@ -97,7 +107,7 @@ class _AssociationsScreenState extends State<AssociationsScreen>
                     Icons.save,
                   ),
                   onPressed: () {
-                    submit(newTopic);
+                    submit(topic);
                   },
                 ),
             ],
@@ -145,30 +155,63 @@ class _AssociationsScreenState extends State<AssociationsScreen>
                 ),
               if (numImportantAssociation > 2)
                 Center(
-                    child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      RepaintBoundary(
-                        key: _stackBodyKey,
-                        child: body,
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      HelpButton(_associatedColor),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      AssociationsGrid(context, newTopic),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        RepaintBoundary(
+                          key: _stackBodyKey,
+                          child: body,
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        AttributesImages(topic),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Divider(
+                          height: 1.0,
+                          thickness: 1.0,
+                          color: Colors.grey[300],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 30.w,
+                            ),
+                            HelpButton(_associatedColor),
+                            Text(
+                              'Other Attributes ',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        AssociationsGrid(
+                          contextApp: context,
+                          topic: topic,
+                          onTopicUpdated: _updateTopic,
+                          topicCreation: true,
+                        ),
+                      ],
+                    ),
                   ),
-                )),
+                ),
 
               Center(
                 child: Stack(
                   children: <Widget>[
                     Text(
-                      newTopic.title,
+                      topic.title,
                       style: TextStyle(
                         fontSize: 48.0.sp,
                         foreground: Paint()
@@ -178,7 +221,7 @@ class _AssociationsScreenState extends State<AssociationsScreen>
                       ),
                     ),
                     Text(
-                      newTopic.title,
+                      topic.title,
                       style: TextStyle(
                         fontSize: 48.0.sp,
                         color: Colors.white,
@@ -213,7 +256,7 @@ class _AssociationsScreenState extends State<AssociationsScreen>
                                     if (value != null)
                                       numImportantAssociation++;
                                     _associatedColor = value;
-                                    newTopic.colorAssociated =
+                                    topic.colorAssociated =
                                         _associatedColor.toString();
                                   });
                                 });

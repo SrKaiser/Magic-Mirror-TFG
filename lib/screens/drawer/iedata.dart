@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:magic_mirror/models/topic.dart';
+import '../../models/topic.dart';
 import '../../drawer/drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
@@ -210,13 +210,13 @@ class ImportExportScreen extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  height: 80, // altura de la línea
-                  thickness: 6, // grosor de la línea
+                  height: 80.h, // altura de la línea
+                  thickness: 6.w, // grosor de la línea
                   color: Color.fromARGB(255, 3, 35, 94), // color de la línea
-                  indent:
-                      20, // espacio a la izquierda (puedes omitir si no necesitas)
-                  endIndent:
-                      20, // espacio a la derecha (puedes omitir si no necesitas)
+                  indent: 20
+                      .w, // espacio a la izquierda (puedes omitir si no necesitas)
+                  endIndent: 20
+                      .w, // espacio a la derecha (puedes omitir si no necesitas)
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -261,13 +261,11 @@ class ImportExportScreen extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  height: 80, // altura de la línea
-                  thickness: 6, // grosor de la línea
-                  color: Color.fromARGB(255, 3, 35, 94), // color de la línea
-                  indent:
-                      20, // espacio a la izquierda (puedes omitir si no necesitas)
-                  endIndent:
-                      20, // espacio a la derecha (puedes omitir si no necesitas)
+                  height: 80.h,
+                  thickness: 6.w,
+                  color: Color.fromARGB(255, 3, 35, 94),
+                  indent: 20.w,
+                  endIndent: 20.w,
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -292,11 +290,11 @@ class ImportExportScreen extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  height: 80,
-                  thickness: 6,
+                  height: 80.h,
+                  thickness: 6.w,
                   color: Color.fromARGB(255, 3, 35, 94),
-                  indent: 20,
-                  endIndent: 20,
+                  indent: 20.w,
+                  endIndent: 20.w,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0).r,

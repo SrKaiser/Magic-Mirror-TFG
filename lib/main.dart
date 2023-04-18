@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:magic_mirror/screens/other_attributes/association_widget.dart';
-import 'package:magic_mirror/utilities/router_observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +25,8 @@ import './screens/drawer/settings_screen.dart';
 import './screens/auth_process/signup_screen.dart';
 import './screens/auth_process/login_screen.dart';
 import './screens/auth_process/welcome_screen.dart';
+import './screens/other_attributes/association_widget.dart';
+import './utilities/router_observer.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDrawerListTile extends StatelessWidget {
   final IconData icon;
@@ -21,8 +22,8 @@ class AppDrawerListTile extends StatelessWidget {
     return InkWell(
       onTap: () => cambiarPantalla(context),
       child: Container(
-        width: 300,
-        height: 40,
+        width: 300.w,
+        height: 40.h,
         child: Row(
           children: [
             Expanded(
@@ -33,7 +34,7 @@ class AppDrawerListTile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Expanded(
               flex: 3,
               child: Row(

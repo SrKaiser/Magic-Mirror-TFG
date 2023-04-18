@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../topics_panel/topic_panel.dart';
 import '../../utilities/title_app.dart';
 import './login_screen.dart';
-
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const routeName = '/signup';
@@ -162,7 +161,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 },
                 child: Text(
                   'Ok',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.white, fontSize: 16.sp),
                 ),
               ),
             ],
@@ -228,7 +227,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   },
                   child: Text(
                     'Ok',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: Colors.white, fontSize: 16.sp),
                   ),
                 ),
               ],

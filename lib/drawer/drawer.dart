@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../screens/drawer/iedata.dart';
 
 import './footer.dart';
@@ -63,9 +64,9 @@ class AppDrawer extends StatelessWidget {
                 title: 'Settings',
                 screen: SettingsScreen.routeName,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               AppDrawerFooter(),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
             ],
           ),
         ),

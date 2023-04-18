@@ -2,18 +2,17 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:magic_mirror/models/topic.dart';
-import 'package:magic_mirror/screens/other_attributes/association_widget.dart';
+import '../../models/topic.dart';
+import '/screens/other_attributes/association_widget.dart';
 
 Future<String> getImageUrl(String id) async {
-  print(id);
   final ref = FirebaseStorage.instance.ref('associations/' + id + '/icon.png');
   final url = await ref.getDownloadURL();
   return url;
 }
 
-Future<List<Widget>> buildContainers(
-    BuildContext contextApp, Topic topic) async {
+Future<List<Widget>> buildContainers(BuildContext contextApp, Topic topic,
+    Function(Topic) onTopicUpdated, bool topicCreation) async {
   final snapshot =
       await FirebaseDatabase.instance.ref().child('associations').once();
   List<Widget> containers = [];
@@ -25,21 +24,28 @@ Future<List<Widget>> buildContainers(
     containers.add(
       GestureDetector(
         onTap: () {
-          print(key);
-          Navigator.of(contextApp).pushNamed(AssociationWidgetScreen.routeName,
-              arguments: {'topic': topic, 'attribute': key});
+          Navigator.of(contextApp)
+              .pushNamed(AssociationWidgetScreen.routeName, arguments: {
+            'topic': topic,
+            'attribute': key,
+            'creation': topicCreation,
+          }).then((value) {
+            if (topicCreation == true) {
+              onTopicUpdated(value);
+            }
+          });
         },
         child: Container(
           height: 92.h,
           width: 92.w,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: Colors.black, width: 2),
+            borderRadius: BorderRadius.circular(10.0).r,
+            border: Border.all(color: Colors.black, width: 2.w),
             color: Colors.white,
           ),
           child: Column(
             children: [
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
               Expanded(
                 child: Image.network(
                   imageUrl,
@@ -47,7 +53,7 @@ Future<List<Widget>> buildContainers(
                 ),
               ),
               Text(key),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
             ],
           ),
         ),
@@ -61,7 +67,12 @@ Future<List<Widget>> buildContainers(
 class AssociationsGrid extends StatefulWidget {
   final BuildContext contextApp;
   final Topic topic;
-  AssociationsGrid(this.contextApp, this.topic);
+  final Function(Topic) onTopicUpdated;
+  final bool topicCreation;
+
+  AssociationsGrid(
+      {this.contextApp, this.topic, this.onTopicUpdated, this.topicCreation});
+
   @override
   _AssociationsGridState createState() => _AssociationsGridState();
 }
@@ -72,7 +83,8 @@ class _AssociationsGridState extends State<AssociationsGrid> {
   @override
   void initState() {
     super.initState();
-    _containersFuture = buildContainers(widget.contextApp, widget.topic);
+    _containersFuture = buildContainers(widget.contextApp, widget.topic,
+        widget.onTopicUpdated, widget.topicCreation);
   }
 
   @override
@@ -86,8 +98,8 @@ class _AssociationsGridState extends State<AssociationsGrid> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
           return Wrap(
-            spacing: 22.0,
-            runSpacing: 16.0,
+            spacing: 22.0.w,
+            runSpacing: 16.0.h,
             children: snapshot.data,
           );
         }
