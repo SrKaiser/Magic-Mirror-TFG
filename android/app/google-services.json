@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "459459703692",
-    "firebase_url": "https://magic-mirror-fafe9-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "magic-mirror-fafe9",
-    "storage_bucket": "magic-mirror-fafe9.appspot.com"
+    "project_number": "936875394898",
+    "firebase_url": "https://magic-mirror-f1c68-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "magic-mirror-f1c68",
+    "storage_bucket": "magic-mirror-f1c68.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:459459703692:android:be5f68f33aff76bfc09ca9",
+        "mobilesdk_app_id": "1:936875394898:android:6abc391ec1bab6fa429c8b",
         "android_client_info": {
           "package_name": "com.example.magic_mirror"
         }
       },
       "oauth_client": [
         {
-          "client_id": "459459703692-8iu8lfjug4qff0f9344ueg976fbfq936.apps.googleusercontent.com",
+          "client_id": "936875394898-0o8g40tnhu6iebka32sqme679t62hc6f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDAlv13yeE_-0349-nn9B_EL2sMV4ch-BI"
+          "current_key": "AIzaSyBmeXANMtJPO2GwW1X66zSq1JC3kWACI2k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "459459703692-8iu8lfjug4qff0f9344ueg976fbfq936.apps.googleusercontent.com",
+              "client_id": "936875394898-0o8g40tnhu6iebka32sqme679t62hc6f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
