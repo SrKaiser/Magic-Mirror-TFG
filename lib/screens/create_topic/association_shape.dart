@@ -62,201 +62,204 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen>
             ),
           ),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Draw the shape of your sense',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                bodyShape = Stack(
-                  children: [
-                    GestureDetector(
-                      onTapDown: (details) {
-                        final shape = Shape(_selectedShape,
-                            details.localPosition, associatedColor);
-                        setState(() {
-                          _shapes.add(shape);
-                        });
-                      },
-                      onPanUpdate: _brushSelected == true
-                          ? (details) {
-                              setState(() {
-                                RenderBox referenceBox =
-                                    context.findRenderObject() as RenderBox;
-                                Offset localPosition = referenceBox
-                                    .globalToLocal(details.localPosition);
-                                _points = List.from(_points)
-                                  ..add(localPosition);
-                              });
-                            }
-                          : null,
-                      onPanEnd: (DragEndDetails details) => _points.add(null),
-                      child: Container(
-                        height: 580.h,
-                        width: 260.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0).w,
-                          ),
-                          color: Colors.white.withOpacity(0),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    CustomPaint(
-                      painter: ShapesPainter(_shapes),
-                    ),
-                    CustomPaint(
-                      painter: DrawingPainter(
-                          points: _points, color: associatedColor),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Container(
-                  width: 300.w,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 32, 53, 130),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)).w,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        spreadRadius: 1.w,
-                        blurRadius: 6.w,
-                      ),
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Draw the shape of your sense',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
-                  child: Row(
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  bodyShape = Stack(
                     children: [
-                      IconButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTapDown: (details) {
+                          final shape = Shape(_selectedShape,
+                              details.localPosition, associatedColor);
                           setState(() {
-                            _selectedShape = ShapeType.Circle;
-                            _brushSelected = false;
+                            _shapes.add(shape);
                           });
                         },
-                        icon: Icon(
-                          Icons.circle_outlined,
-                          color: Colors.white,
+                        onPanUpdate: _brushSelected == true
+                            ? (details) {
+                                setState(() {
+                                  RenderBox referenceBox =
+                                      context.findRenderObject() as RenderBox;
+                                  Offset localPosition = referenceBox
+                                      .globalToLocal(details.localPosition);
+                                  _points = List.from(_points)
+                                    ..add(localPosition);
+                                });
+                              }
+                            : null,
+                        onPanEnd: (DragEndDetails details) => _points.add(null),
+                        child: Container(
+                          height: 580.h,
+                          width: 260.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20.0).w,
+                            ),
+                            color: Colors.white.withOpacity(0),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                        iconSize: 25.sp,
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedShape = ShapeType.Star;
-                            _brushSelected = false;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.star_border,
-                          color: Colors.white,
-                        ),
-                        iconSize: 30.sp,
+                      CustomPaint(
+                        painter: ShapesPainter(_shapes),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedShape = ShapeType.Square;
-                            _brushSelected = false;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.square_outlined,
-                          color: Colors.white,
-                        ),
-                        iconSize: 25.sp,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _brushSelected = true;
-                            _selectedShape = null;
-                          });
-                        },
-                        icon: Icon(
-                          Icons.brush,
-                          color: Colors.white,
-                        ),
-                        iconSize: 25.sp,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          _shapes.clear();
-                          _points.clear();
-                        },
-                        icon: Icon(
-                          Icons.delete_outline,
-                          color: Colors.white,
-                        ),
-                        iconSize: 25.sp,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0).w,
-                                ),
-                                backgroundColor: Color.fromARGB(255, 8, 54, 85),
-                                title: Text(
-                                  "Are you sure?",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                content: Text(
-                                  "This action cannot be undone.",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop(bodyShape);
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        icon: Icon(
-                          Icons.save,
-                          color: Colors.white,
-                        ),
-                        iconSize: 25.sp,
+                      CustomPaint(
+                        painter: DrawingPainter(
+                            points: _points, color: associatedColor),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Container(
+                    width: 300.w,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 32, 53, 130),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)).w,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          spreadRadius: 1.w,
+                          blurRadius: 6.w,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _selectedShape = ShapeType.Circle;
+                              _brushSelected = false;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.circle_outlined,
+                            color: Colors.white,
+                          ),
+                          iconSize: 25.sp,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _selectedShape = ShapeType.Star;
+                              _brushSelected = false;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.star_border,
+                            color: Colors.white,
+                          ),
+                          iconSize: 30.sp,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _selectedShape = ShapeType.Square;
+                              _brushSelected = false;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.square_outlined,
+                            color: Colors.white,
+                          ),
+                          iconSize: 25.sp,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _brushSelected = true;
+                              _selectedShape = null;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.brush,
+                            color: Colors.white,
+                          ),
+                          iconSize: 25.sp,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _shapes.clear();
+                            _points.clear();
+                          },
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: Colors.white,
+                          ),
+                          iconSize: 25.sp,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0).w,
+                                  ),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 8, 54, 85),
+                                  title: Text(
+                                    "Are you sure?",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  content: Text(
+                                    "This action cannot be undone.",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: Text(
+                                        "No",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        "Yes",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop(bodyShape);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            Icons.save,
+                            color: Colors.white,
+                          ),
+                          iconSize: 25.sp,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ]),
