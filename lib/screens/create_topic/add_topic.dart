@@ -96,7 +96,6 @@ class _AddTopicScreenState extends State<AddTopicScreen> {
   @override
   void initState() {
     super.initState();
-    // currentLocation = getAddressFromLatLng();
     /* addPostFrameCallback() se utiliza para esperar hasta que el widget se 
     haya construido completamente antes de mostrar el diálogo. */
     WidgetsBinding.instance.addPostFrameCallback((_) {

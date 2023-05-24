@@ -23,6 +23,7 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen>
   bool _brushSelected = false;
   Stack bodyShape;
   bool _initialized = false;
+  bool _delete = true;
   ImageProvider imageProvider;
 
   @override
@@ -198,6 +199,9 @@ class _AssociationShapeScreenState extends State<AssociationShapeScreen>
                           onPressed: () {
                             _shapes.clear();
                             _points.clear();
+                            setState(() {
+                              _delete = !_delete;
+                            });
                           },
                           icon: Icon(
                             Icons.delete_outline,

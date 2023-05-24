@@ -54,8 +54,6 @@ Future<Directory> getDownloadsDirectory() async {
     final String downloadsPath = '/storage/emulated/0/Download';
     final Directory downloadsDirectory = Directory(downloadsPath);
     return downloadsDirectory;
-  } else if (Platform.isIOS) {
-    return await getApplicationDocumentsDirectory();
   } else {
     throw UnsupportedError('Unsupported platform');
   }

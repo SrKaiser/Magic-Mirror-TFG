@@ -102,15 +102,6 @@ class _TopicItemState extends State<TopicItem> {
           var myTopicsStorage = TopicsStorage(user.uid);
           await myTopicsStorage.deleteTopic(widget.topic);
         },
-        // onDismissed: (direction) async {
-        //   // User user = FirebaseAuth.instance.currentUser;
-        //   // DatabaseReference dbRef = FirebaseDatabase.instance
-        //   //     .ref()
-        //   //     .child("users")
-        //   //     .child(user.uid)
-        //   //     .child("topics");
-        //   // dbRef.child(widget.topic.id).remove();
-        // },
         background: Container(
           color: Colors.red,
           child: Icon(Icons.delete, color: Colors.white),

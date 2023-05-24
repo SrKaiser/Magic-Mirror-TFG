@@ -21,12 +21,6 @@ class _TopicsListState extends State<TopicsList> {
   List<Topic> topics = [];
   @override
   void initState() {
-    // User user = FirebaseAuth.instance.currentUser;
-    // dbRef = FirebaseDatabase.instance
-    //     .ref()
-    //     .child("users")
-    //     .child(user.uid)
-    //     .child("topics");
     User user = FirebaseAuth.instance.currentUser;
     var myTopicsStorage = TopicsStorage(user.uid);
     myTopicsStorage.loadTopicsByFilter(widget.filterSelected).then(
@@ -66,9 +60,6 @@ class _TopicsListState extends State<TopicsList> {
                 );
               },
             )
-          // Column(
-          //     children: topics.map((topic) => TopicItem(topic)).toList(),
-          //   )
           : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -101,46 +92,4 @@ class _TopicsListState extends State<TopicsList> {
             ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container(
-  //     height: double.infinity,
-  //     child: StreamBuilder(
-  //       stream: dbRef.onValue,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData && snapshot.data.snapshot.value != null) {
-  //           return FirebaseAnimatedList(
-  //             query: dbRef,
-  //             itemBuilder: (context, snapshot, animation, index) {
-  //               Map topic = snapshot.value as Map;
-  //               topic['key'] = topic.keys;
-  //               return TopicItem(topic);
-  //             },
-  //           );
-  //         } else {
-  // return Center(
-  //     child: Column(
-  //   mainAxisAlignment: MainAxisAlignment.center,
-  //   children: [
-  //     // Text(
-  //     //   'Waiting the first topic to be added...',
-  //     //   textAlign: TextAlign.center,
-  //     //   style: TextStyle(
-  //     //     fontSize: 26.sp,
-  //     //     fontWeight: FontWeight.bold,
-  //     //   ),
-  //     // ),
-  //     SizedBox(
-  //       height: 20.h,
-  //     ),
-  //     LoadingSpinner(),
-  //   ],
-  // ));
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
-
 }
