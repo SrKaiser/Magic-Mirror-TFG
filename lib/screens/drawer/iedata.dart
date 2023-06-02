@@ -6,7 +6,6 @@ import '../../models/topic.dart';
 import '../../drawer/drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -127,7 +126,6 @@ List<Topic> parseTopicsFromJson(String jsonString) {
   List<dynamic> topicsJsonList = data['topics'];
   String userId = data['userId'];
   if (userId != FirebaseAuth.instance.currentUser.uid) {
-    print("nope");
     return null;
   }
   List<Topic> topics =
